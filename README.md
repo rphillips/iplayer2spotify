@@ -28,7 +28,7 @@ Usage of ./iplayer2spotify:
 # Example
 
 ```
-./i3player2spotify \
+./iplayer2spotify \
   -playlist-name "Radio 6's Finest Hour" \
   -show-url "https://www.bbc.co.uk/programmes/b09x8f5t" \
   -username [SPOTIFY_USERNAME]
