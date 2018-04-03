@@ -19,7 +19,7 @@ const maxSongsOnCreate = 100
 var (
 	auth  = spotify.NewAuthenticator(redirectURI, spotify.ScopePlaylistModifyPrivate)
 	ch    = make(chan *spotify.Client)
-	state = "351f2cb7c3814e67ae3e9043c280b380"
+	state = "token"
 )
 
 func parseSegments(doc string) []string {
