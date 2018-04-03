@@ -2,6 +2,12 @@
 
 Converts a playlist from the BBC Radio to Spotify.
 
+# Install
+
+```
+go get github.com/rphillips/iplayer2spotify
+```
+
 # Usage
 
 Register for a SPOTIFY_ID and SPOTIFY_SECRET
