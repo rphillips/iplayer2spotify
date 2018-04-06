@@ -1,23 +1,14 @@
+[![Build Status](https://travis-ci.org/rphillips/iplayer2spotify.svg?branch=master)](https://travis-ci.org/rphillips/iplayer2spotify)
+
 # iplayer2spotify
 
 Converts a playlist from the BBC Radio to Spotify.
 
 # Install
 
-```
-go get github.com/rphillips/iplayer2spotify
-```
+Use a release version!
 
 # Usage
-
-Register for a SPOTIFY_ID and SPOTIFY_SECRET
-[here](https://developer.spotify.com/my-applications/).
-
-Export the ID and Secret:
-```
-export SPOTIFY_ID=<your ID>
-export SPOTIFY_SECRET=<your secret>
-```
 
 ```
 Usage of ./iplayer2spotify:
@@ -27,8 +18,6 @@ Usage of ./iplayer2spotify:
     	playlist name
   -show-url string
     	url of show
-  -username string
-    	username
 ```
 
 # Example
@@ -36,6 +25,14 @@ Usage of ./iplayer2spotify:
 ```
 ./iplayer2spotify \
   -playlist-name "Radio 6's Finest Hour" \
-  -show-url "https://www.bbc.co.uk/programmes/b09x8f5t" \
-  -username [SPOTIFY_USERNAME]
+  -show-url "https://www.bbc.co.uk/programmes/b09x8f5t"
 ```
+
+# Using your own Spotify Secrets
+
+Export the ID and Secret:
+```
+export SPOTIFY_ID=<your ID>
+export SPOTIFY_SECRET=<your secret>
+```
+
