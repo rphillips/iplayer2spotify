@@ -4,34 +4,24 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"math/rand"
 	"net/http"
 	"os"
 	"strings"
 	"time"
 
 	"github.com/anaskhan96/soup"
+	"github.com/rphillips/iplayer2spotify/secrets"
 	"github.com/zmb3/spotify"
 )
 
 const redirectURI = "http://localhost:8080/callback"
 const maxSongsOnCreate = 100
-const charset = "abcdefghijklmnopqrstuvwxyz" + "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-
-var seededRand *rand.Rand = rand.New(rand.NewSource(time.Now().UnixNano()))
-
-func StringWithCharset(length int, charset string) string {
-	b := make([]byte, length)
-	for i := range b {
-		b[i] = charset[seededRand.Intn(len(charset))]
-	}
-	return string(b)
-}
+const maxSearchRetries = 5
 
 var (
 	auth  = spotify.NewAuthenticator(redirectURI, spotify.ScopePlaylistModifyPrivate)
 	ch    = make(chan *spotify.Client)
-	state = StringWithCharset(24, charset)
+	state = stringWithCharset(24, charset)
 )
 
 func parseSegments(doc string) []string {
@@ -101,51 +91,59 @@ func createPlaylist(username string, client *spotify.Client, title string, songI
 func searchForSpotifyTracks(client *spotify.Client, artistSongs []string, isCleanOnly bool) ([]spotify.ID, error) {
 	songIDs := make([]spotify.ID, 0)
 	for _, searchData := range artistSongs {
-		fmt.Printf("Searching for %v\n", searchData)
+		log.Printf("Searching for %v\n", searchData)
 		splitted := strings.Split(searchData, "||")
 		searchStr := fmt.Sprintf("artist:%v %v", splitted[0], splitted[1])
-		results, err := client.Search(searchStr, spotify.SearchTypeTrack|spotify.SearchTypeArtist)
-		if err != nil {
-			return nil, err
-		}
-		if results.Tracks == nil {
-			continue
-		}
-		if len(results.Tracks.Tracks) > 0 {
-			if isCleanOnly == true && results.Tracks.Tracks[0].Explicit {
-				continue
+		retry(maxSearchRetries, 5*time.Second, func() error {
+			results, err := client.Search(searchStr, spotify.SearchTypeTrack|spotify.SearchTypeArtist)
+			if err != nil {
+				log.Printf("Spotify search error: %v. Retrying...\n", err)
+				return err
 			}
-			songIDs = append(songIDs, results.Tracks.Tracks[0].ID)
-		}
+			if results.Tracks == nil {
+				return nil
+			}
+			if len(results.Tracks.Tracks) > 0 {
+				if isCleanOnly == true && results.Tracks.Tracks[0].Explicit {
+					return nil
+				}
+				songIDs = append(songIDs, results.Tracks.Tracks[0].ID)
+			}
+			return nil
+		})
 	}
 	return songIDs, nil
 }
 
 func main() {
-	var showUrl = flag.String("show-url", "", "url of show")
+	var showURL = flag.String("show-url", "", "url of show")
 	var playlistName = flag.String("playlist-name", "", "playlist name")
-	var username = flag.String("username", "", "username")
 	var isCleanOnly = flag.Bool("clean", false, "suppress explicit tracks")
 
 	flag.Parse()
 
-	if os.Getenv("SPOTIFY_ID") == "" {
+	envStr := os.Getenv("SPOTIFY_ID")
+	if envStr != "" {
+		secrets.ClientID = envStr
+	}
+	envStr = os.Getenv("SPOTIFY_SECRET")
+	if envStr != "" {
+		secrets.SecretKey = envStr
+	}
+	if secrets.ClientID == "" {
 		log.Fatalf("SPOTIFY_ID not set")
 	}
-	if os.Getenv("SPOTIFY_SECRET") == "" {
+	if secrets.SecretKey == "" {
 		log.Fatalf("SPOTIFY_SECRET not set")
 	}
-	if *showUrl == "" {
+	if *showURL == "" {
 		log.Fatalf("Invalid URL")
 	}
 	if *playlistName == "" {
 		log.Fatalf("Invalid Playlist name")
 	}
-	if *username == "" {
-		log.Fatalf("Invalid Username")
-	}
 
-	endpoint := *showUrl + "/segments.inc"
+	endpoint := *showURL + "/segments.inc"
 	log.Printf("Using Show URL %v\n", endpoint)
 
 	// Setup auth callback
@@ -156,12 +154,18 @@ func main() {
 	go http.ListenAndServe(":8080", nil)
 
 	// Auth to Spotify
+	auth.SetAuthInfo(secrets.ClientID, secrets.SecretKey)
 	url := auth.AuthURL(state)
 	fmt.Println("Please log in to Spotify by visiting the following page in your browser:", url)
 
 	// wait for auth to complete
 	client := <-ch
 	client.AutoRetry = true
+
+	user, err := client.CurrentUser()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Fetch Segments
 	doc := fetchProgramSegments(endpoint)
@@ -175,7 +179,7 @@ func main() {
 	now := time.Now()
 	nowFormatted := fmt.Sprintf("%02d%02d%02d", now.Year(), now.Month(), now.Day())
 	playlistTitle := fmt.Sprintf("%s - %s", *playlistName, nowFormatted)
-	if err := createPlaylist(*username, client, playlistTitle, songIDs...); err != nil {
+	if err := createPlaylist(user.ID, client, playlistTitle, songIDs...); err != nil {
 		log.Fatal(err)
 	}
 
