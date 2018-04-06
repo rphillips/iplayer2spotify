@@ -14,7 +14,7 @@ deploy:
   api_key:
     secure: X430LSxp7sMn/EP4w5+OlG+zTZ5XLVonvSgL6tcq3l18L7aB5fFTR44LNiWMemBSImuzeN97VcmQt6ZVrEmlFyvYjo6ndvcYW6BKnzE+AU5A6KD2yNhOnKcUyRBhBkcxAFbgz/+ZX+KOkc+WighdUB/VphL5tM+yCSfhCwifWuzLURj3rVnny4j9y02YGfFHHbSwvMibvskrK1ohQfp21z0qPxEPTp96RoIruPkzHU+CdCTo6BO7yETinH6jYkIfRa2zbKb0H3Dn3DfvxCZ58odaJ1VZGMvPFka0UEfZTGOms0NU0sOTxEmc1PZeMls+2KQg+fj3hBT6SAPpAdGBIWo+hxKAnp7+hKP8KhLwfieu62O+Xx4WSsEYVhX2ec+LYYLZxWLYBzRlg9EnWQg4YxSjk0kPu0uAJKIQHYmS3hpVn75waPpHLtMqmkPTthRMgpNf3ad9NdeFwJeEPdXqteTdpOzl+OKtsj0V8H5tdGAgF6sHsALisLZ+sGrQcifUZDZCYQKmVHepjaQrIqyeNTmv8mSBKN6pO/bDYuU2XTXAWg1+U7l38Wr/aCxDwdDHH7soMiPiKXA9DlEMVm5BjBkuOz+eTrqy7ZX3zW086kyHhyLL/aN8vfBpmpkrRijNIGIlnehI0JiShxswn2duzgrfobJ8Kw1/3W+3gf2emcQ=
   file:
-    - iplayer2spotify-windows-amd64
+    - iplayer2spotify-windows-amd64.exe
     - iplayer2spotify-darwin-amd64
     - iplayer2spotify-linux-amd64
   on:
