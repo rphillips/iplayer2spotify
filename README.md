@@ -1,8 +1,6 @@
-[![Build Status](https://travis-ci.org/rphillips/iplayer2spotify.svg?branch=master)](https://travis-ci.org/rphillips/iplayer2spotify)
+# iplayer2spotify [![Build Status](https://travis-ci.org/rphillips/iplayer2spotify.svg?branch=master)](https://travis-ci.org/rphillips/iplayer2spotify)
 
-# iplayer2spotify
-
-Converts a playlist from the BBC Radio to Spotify.
+Converts a playlist from the [BBC Radio](http://www.bbc.co.uk/radio/schedules) to Spotify.
 
 # Install
 
