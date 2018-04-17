@@ -1,19 +1,17 @@
-all: \
-	iplayer2spotify-linux-amd64 \
-	iplayer2spotify-windows-amd64.exe \
-	iplayer2spotify-darwin-amd64
-
+GIT_TAG := $(shell git describe --abbrev=0)
+TAG_DISTANCE := $(shell git describe --long | awk -F- '{print $$2}')
+PKG_VERSION := ${GIT_TAG}-${TAG_DISTANCE}
 GOFILES:=$(shell find . -name '*.go' | grep -v -E '(.vendor)')
-LDFLAGS=-X github.com/rphillips/iplayer2spotify/secrets.ClientID=${SPOTIFY_ID} -X github.com/rphillips/iplayer2spotify/secrets.SecretKey=${SPOTIFY_SECRET}
+LDFLAGS=-X github.com/rphillips/iplayer2spotify/version.Version=${PKG_VERSION} -X github.com/rphillips/iplayer2spotify/secrets.ClientID=${SPOTIFY_ID} -X github.com/rphillips/iplayer2spotify/secrets.SecretKey=${SPOTIFY_SECRET}
 
-iplayer2spotify-linux-amd64: $(GOFILES)
-	@GOOS=linux GOARCH=amd64 go build $(GOFLAGS) -ldflags "$(LDFLAGS)" -o $@ .
+build: ${GOPATH}/bin/gox
+	CGO_ENABLED=0 ${GOPATH}/bin/gox \
+        -ldflags="${LDFLAGS}" \
+		-osarch="linux/amd64 darwin/amd64 windows/amd64" \
+		-output="{{.Dir}}-{{.OS}}-{{.Arch}}"
 
-iplayer2spotify-windows-amd64.exe: $(GOFILES)
-	@GOOS=windows GOARCH=amd64 go build $(GOFLAGS) -ldflags "$(LDFLAGS)" -o $@ .
-
-iplayer2spotify-darwin-amd64: $(GOFILES)
-	@GOOS=darwin GOARCH=amd64 go build $(GOFLAGS) -ldflags "$(LDFLAGS)" -o $@ .
+${GOPATH}/bin/gox:
+	go get -v github.com/mitchellh/gox
 
 clean:
 	rm -f iplayer2spotify-*
