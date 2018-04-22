@@ -116,8 +116,10 @@ func searchForSpotifyTracks(opts *Options, client *spotify.Client, artistSongs [
 	songIDs := make([]spotify.ID, 0)
 	for _, searchData := range artistSongs {
 		splitted := strings.Split(searchData, "||")
-		log.Printf("Searching for %v - %v\n", splitted[0], splitted[1])
-		searchStr := fmt.Sprintf("artist:%v %v", splitted[0], splitted[1])
+		artist := strings.TrimSpace(splitted[0])
+		song := strings.TrimSpace(splitted[1])
+		log.Printf("Searching for %v - %v\n", artist, song)
+		searchStr := fmt.Sprintf("artist:\"%v\" %v", artist, song)
 		retry(maxSearchRetries, 5*time.Second, func() error {
 			results, err := client.Search(searchStr, spotify.SearchTypeTrack|spotify.SearchTypeArtist)
 			if err != nil {
@@ -125,10 +127,12 @@ func searchForSpotifyTracks(opts *Options, client *spotify.Client, artistSongs [
 				return err
 			}
 			if results.Tracks == nil {
+				log.Printf("Could not find %v - %v", artist, song)
 				return nil
 			}
 			if len(results.Tracks.Tracks) > 0 {
 				if opts.CleanOnly == true && results.Tracks.Tracks[0].Explicit {
+					log.Printf("Explicit song rejected %v - %v", artist, song)
 					return nil
 				}
 				songIDs = append(songIDs, results.Tracks.Tracks[0].ID)
