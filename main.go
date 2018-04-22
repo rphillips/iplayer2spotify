@@ -115,8 +115,8 @@ func createPlaylistTitle(opts *Options) (string, error) {
 func searchForSpotifyTracks(opts *Options, client *spotify.Client, artistSongs []string) ([]spotify.ID, error) {
 	songIDs := make([]spotify.ID, 0)
 	for _, searchData := range artistSongs {
-		log.Printf("Searching for %v\n", searchData)
 		splitted := strings.Split(searchData, "||")
+		log.Printf("Searching for %v - %v\n", splitted[0], splitted[1])
 		searchStr := fmt.Sprintf("artist:%v %v", splitted[0], splitted[1])
 		retry(maxSearchRetries, 5*time.Second, func() error {
 			results, err := client.Search(searchStr, spotify.SearchTypeTrack|spotify.SearchTypeArtist)
@@ -235,7 +235,7 @@ func main() {
 		},
 		cli.StringFlag{
 			Name:  "playlist-name",
-			Usage: "playlist name, allows for go template (Supported Variables: {{ Now }} {{ CleanOnly }}",
+			Usage: "playlist name, allows for go template (Supported Variables: {{ .Now }} {{ .CleanOnly }}",
 		},
 		cli.StringFlag{
 			Name:   "spotify-id",
