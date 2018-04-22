@@ -22,6 +22,7 @@ const defaultDateFormat = "20060102"
 const maxSearchRetries = 5
 const maxSongsOnCreate = 100
 const redirectURI = "http://localhost:8080/callback"
+const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
 
 var (
 	auth  = spotify.NewAuthenticator(redirectURI, spotify.ScopePlaylistModifyPrivate)
@@ -48,7 +49,7 @@ func fetchProgramSegments(url string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	req.Header.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36")
+	req.Header.Add("User-Agent", userAgent)
 	body, err := soup.GetWithClient(url, client)
 	if err != nil {
 		log.Fatal(err)
