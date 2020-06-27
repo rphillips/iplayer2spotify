@@ -33,16 +33,20 @@ var (
 func parseSegments(doc string) []string {
 	artistSongs := make([]string, 0)
 	parsed := soup.HTMLParse(doc)
-	data := parsed.FindAll("div", "class", "p-f")
-	for i := 0; i < len(data); i++ {
-		if val, ok := data[i].Attrs()["data-title"]; ok {
-			artistSongs = append(artistSongs, val)
+	segments := parsed.FindAll("div", "class", "segment__track")
+	for _, node := range segments {
+		artistSongSegments := node.FindAll("span")
+		if len(artistSongSegments) != 2 {
+			continue
 		}
+		artist := artistSongSegments[0].Text()
+		song := artistSongSegments[1].Text()
+		artistSongs = append(artistSongs, fmt.Sprintf("%s - %s", artist, song))
 	}
 	return artistSongs
 }
 
-func fetchProgramSegments(url string) string {
+func fetchProgramSegments(url string) (string, error) {
 	client := &http.Client{}
 
 	req, err := http.NewRequest("GET", url, nil)
@@ -50,11 +54,7 @@ func fetchProgramSegments(url string) string {
 		log.Fatal(err)
 	}
 	req.Header.Add("User-Agent", userAgent)
-	body, err := soup.GetWithClient(url, client)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return body
+	return soup.GetWithClient(url, client)
 }
 
 func completeAuth(w http.ResponseWriter, r *http.Request) {
@@ -209,8 +209,11 @@ func run(c *cli.Context) error {
 	}
 
 	// Fetch Segments
-	doc := fetchProgramSegments(endpoint)
-	artistSongs := parseSegments(string(doc))
+	doc, err := fetchProgramSegments(endpoint)
+	if err != nil {
+		return err
+	}
+	artistSongs := parseSegments(doc)
 	songIDs, err := searchForSpotifyTracks(options, client, artistSongs)
 	if err != nil {
 		return err
