@@ -183,7 +183,7 @@ func run(c *cli.Context) error {
 		return err
 	}
 
-	endpoint := options.ShowURL + "/segments.inc"
+	endpoint := options.ShowURL
 	log.Printf("Using Show URL %v\n", endpoint)
 
 	// Setup auth callback
