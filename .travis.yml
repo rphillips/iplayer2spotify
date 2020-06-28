@@ -6,7 +6,6 @@ env:
 go:
 - 1.14.x
 deploy:
-  tags: true
   provider: releases
   api_key:
     secure: w11pIzch8cLjPtgphy/vVCaHeKhrnvUzhx8hhIkUoal5MPM5ca2s+q3B+S8a6W3/nNy4Fmi2UFGvLt2KxHUCe2fRTkrHwW/OPKBWlUbYiAUzbgFG3ae9+GcfiWOyzZDsULT60Z7BCbEqDxvX5/GlOrHUXhKWNQKICsnLBVyKwaEFisTzqh5Opbl7YOAdHY62qQVRPOmVZs+Acmhh0Ukk+svotqVQPFWInPv83x4ETw+AWgwIWL1pjwmyJdqGd+7zfKpmuQKJEVZNgXluaJAFfAvUQ8/iPTeY5Fk1Wc6WN1Ueg2fxSl5PpK09wyf49UCUyNSwuuhnTO3dKNZmFPdzHfAfZp8rApqP+Mk3krjyOQlK/eI9ismq9JJ0IknevaGZk4bIWDVfFBSj6+ziiJt0I9KfERa8RGCDi6PzGRwgKWGJ9JoSkfInwaa7eQEMmEGZRbYxhZ6zc/s4+NfEl66J31gvWJhtJw7/+wpUilO0t57P1NwYYqEtDH+ev3fOo2L9IgWvkZ/1BPSrGwoDjjSHRSSwiMl4S+PvpKBGh8uOKH3KvryEZr96B+qZmUnAaaIJysyjopkaMRDXBnoKw0cRYCA2DGJxiNTGZZ20NZ6WZ+jca24RialOkXbtv58SZcKFKqNrPMOF042htQBdHTIsgn3bRu60yjzPUq54EVRfR0w=
@@ -14,5 +13,5 @@ deploy:
   file:
     - iplayer2spotify-*
   on:
-    repo: rphillips/iplayer2spotify
+    tags: true
   skip_cleanup: 'true'
