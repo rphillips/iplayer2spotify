@@ -7,7 +7,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strings"
 	"text/template"
 	"time"
 
@@ -116,13 +115,9 @@ func createPlaylistTitle(opts *Options) (string, error) {
 func searchForSpotifyTracks(opts *Options, client *spotify.Client, artistSongs []string) ([]spotify.ID, error) {
 	songIDs := make([]spotify.ID, 0)
 	for _, searchData := range artistSongs {
-		splitted := strings.Split(searchData, "||")
-		artist := strings.TrimSpace(splitted[0])
-		song := strings.TrimSpace(splitted[1])
-		log.Printf("Searching for %v - %v\n", artist, song)
-		searchStr := fmt.Sprintf("artist:\"%v\" %v", artist, song)
+		log.Printf("Searching for %v\n", searchData)
 		retry(maxSearchRetries, 5*time.Second, func() error {
-			results, err := client.Search(searchStr, spotify.SearchTypeTrack|spotify.SearchTypeArtist)
+			results, err := client.Search(searchData, spotify.SearchTypeTrack|spotify.SearchTypeArtist)
 			if err != nil {
 				log.Printf("Spotify search error: %v. Retrying...\n", err)
 				return err
