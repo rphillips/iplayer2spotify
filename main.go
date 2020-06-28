@@ -123,12 +123,12 @@ func searchForSpotifyTracks(opts *Options, client *spotify.Client, artistSongs [
 				return err
 			}
 			if results.Tracks == nil {
-				log.Printf("Could not find %v - %v", artist, song)
+				log.Printf("Could not find %v", searchData)
 				return nil
 			}
 			if len(results.Tracks.Tracks) > 0 {
 				if opts.CleanOnly == true && results.Tracks.Tracks[0].Explicit {
-					log.Printf("Explicit song rejected %v - %v", artist, song)
+					log.Printf("Explicit song rejected %v", searchData)
 					return nil
 				}
 				songIDs = append(songIDs, results.Tracks.Tracks[0].ID)
