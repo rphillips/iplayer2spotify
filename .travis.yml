@@ -4,7 +4,10 @@ env:
   - secure: ljOFWfGXafioTiYLC+ndzw9U4aL9e9Xs7NR1ZxNjjwuZM3hfYuQDN102wKK4MYb8xZITs+jaBvP52lCZ8FbkFdPGHiktHvO/aICt2t+3odoouPDRCVKog0LYqI/T9IbioxueFev/q4p8Wu9zWwbydxfxt7Xy+wjW9v6lzBqXXbP62pDYcAnbfPow8jb+n8OdboezvyGUhmR345K6LxfEoHGhTL/GmLXyPQnupKQ5ImfKeHFVj5fuOVHXfOtpZPsQDR7BVjOncEi6tKJJa+z55IQ/C1fW4gRqtLs27QrRIfoPSOpzGxFKqbFXoIN4cnOX50HVk//h93p2xrMMwypykC73AVeI2m76wEr6jKHqtjpA1da68Cf7lC8hdg6V2ZSiwsemoizKmV9Y/bGo3Gf0nWtpAV51ZjoH5fCaB1+Jemu33vngl1HYfi9QfrZM4JbRBEoACPZCb9Ngq5WqZGjTNtQL8a3P7aeqKCR0eSfuEWCUo+2lM3hTp5ate0vde6W6yqMwbTSdb3FvSaznN/UZqq8/u229WdOCxGX6pk3aMaN5bZ8/rkOt2vrfbNZrLffp/Z1r8wgPxJUKmOZKTwxkTkaBBwCQuA7M03oAx69P7YCrqdCU3c51YfonaC4QN9bZV6RgnRVuBZairPgv+WECSXp0A8XAe0Xrtqe5pOGew5w=
   - secure: l7vHZy1tVXZ8vCITBtSe2YDkn727WrrhLVZtFpwgQ+ErCG/29sD9kPOMBeCw4zFuSlQVo4w1yz0ekavFT0PiDmKU/VM92tv/w/z5REyXQSsvZV+8L6d2P64YWpG6a8RQDRXFnvtEzYkhCJtyZiA++8faTXRym9ab15cv25e0HNS4lKLIKoZu0JMwRRD1bX8dj/O7zCmg6D2JMt8daou5RdnMTM1zwoZA6lTGrkIGjnH29p0q7TrdnAcQRiuYIf+Uz0rhdTXfL2WCAFkyc2zTkwKGVLGqTVdqBQ6Z9bszeU2OVM6hY8sd3oaKGSvxvheC3Xgvufq1rs/RH0sYdKaP4jqIWOTIn25z680ThrYWNFpNPb1AOF8Pvbjv6NDFOAH+3/+8IEotmDBGb5QZOPyT9DqxsOSMwNYAJt3eckOHl65USehgRx4oTEASQFXukRfrQT5Y5aSssc0Xq8DPkwRhzKT8Ux8odY0dGMWZs0JhRY5x2lq+WglghAf3XM6otttvPCjn2FPcrM+K71TBzPNET2/8Az7kjmPNvT/fh2a1qz8QGVV2VzoIPoHlsM66kaKF63t6oTE1okizEZeeUxVQuJPYdPWUAx+lZ30mlDURY+F5vjQ4W6C1oFiaUENYh+aOyuVJ68IdyZX8wm9xy1cH6LV4yLQhMKZ20KzFB/tVxVU=
 go:
+- 1.13.x
 - 1.14.x
+before_install:
+- go get github.com/mitchellh/gox
 deploy:
   provider: releases
   api_key:
@@ -14,4 +17,5 @@ deploy:
     - iplayer2spotify-*
   on:
     tags: true
+    condition: $TRAVIS_GO_VERSION =~ ^1\.14
   skip_cleanup: 'true'
