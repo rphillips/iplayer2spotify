@@ -1,0 +1,31 @@
+# github.com/anaskhan96/soup v1.0.2-0.20180328123631-cd07662ec930
+## explicit
+github.com/anaskhan96/soup
+# github.com/golang/protobuf v1.0.0
+## explicit
+github.com/golang/protobuf/proto
+# github.com/zmb3/spotify v0.0.0-20180212041948-79deba8533f6
+## explicit
+github.com/zmb3/spotify
+# golang.org/x/net v0.0.0-20180330215511-b68f30494add
+## explicit
+golang.org/x/net/context
+golang.org/x/net/context/ctxhttp
+golang.org/x/net/html
+golang.org/x/net/html/atom
+# golang.org/x/oauth2 v0.0.0-20180402223937-921ae394b943
+## explicit
+golang.org/x/oauth2
+golang.org/x/oauth2/internal
+# google.golang.org/appengine v1.0.0
+## explicit
+google.golang.org/appengine/internal
+google.golang.org/appengine/internal/base
+google.golang.org/appengine/internal/datastore
+google.golang.org/appengine/internal/log
+google.golang.org/appengine/internal/remote_api
+google.golang.org/appengine/internal/urlfetch
+google.golang.org/appengine/urlfetch
+# gopkg.in/urfave/cli.v1 v1.20.0
+## explicit
+gopkg.in/urfave/cli.v1
