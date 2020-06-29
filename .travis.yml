@@ -18,4 +18,3 @@ deploy:
   on:
     tags: true
     condition: $TRAVIS_GO_VERSION =~ ^1\.14
-  skip_cleanup: 'true'
