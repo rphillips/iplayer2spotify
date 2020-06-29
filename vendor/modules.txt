@@ -4,6 +4,8 @@ github.com/anaskhan96/soup
 # github.com/golang/protobuf v1.0.0
 ## explicit
 github.com/golang/protobuf/proto
+# github.com/mitchellh/gox v1.0.1
+## explicit
 # github.com/zmb3/spotify v0.0.0-20180212041948-79deba8533f6
 ## explicit
 github.com/zmb3/spotify
