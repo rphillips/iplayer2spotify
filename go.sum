@@ -2,6 +2,12 @@ github.com/anaskhan96/soup v1.0.2-0.20180328123631-cd07662ec930 h1:jJZqLZgIEKyZq
 github.com/anaskhan96/soup v1.0.2-0.20180328123631-cd07662ec930/go.mod h1:pT5vs4HXDwA5y4KQCsKvnkpQd3D+joP7IqpiGskfWW0=
 github.com/golang/protobuf v1.0.0 h1:lsek0oXi8iFE9L+EXARyHIjU5rlWIhhTkjDz3vHhWWQ=
 github.com/golang/protobuf v1.0.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
+github.com/hashicorp/go-version v1.0.0 h1:21MVWPKDphxa7ineQQTrCU5brh7OuVVAzGOCnnCPtE8=
+github.com/hashicorp/go-version v1.0.0/go.mod h1:fltr4n8CU8Ke44wwGCBoEymUuxUHl09ZGVZPK5anwXA=
+github.com/mitchellh/gox v1.0.1 h1:x0jD3dcHk9a9xPSDN6YEL4xL6Qz0dvNYm8yZqui5chI=
+github.com/mitchellh/gox v1.0.1/go.mod h1:ED6BioOGXMswlXa2zxfh/xdd5QhwYliBFn9V18Ap4z4=
+github.com/mitchellh/iochan v1.0.0 h1:C+X3KsSTLFVBr/tK1eYN/vs4rJcvsiLU338UhYPJWeY=
+github.com/mitchellh/iochan v1.0.0/go.mod h1:JwYml1nuB7xOzsp52dPpHFffvOCDupsG0QubkSMEySY=
 github.com/zmb3/spotify v0.0.0-20180212041948-79deba8533f6 h1:07d/UYzbd/YHT31y8aiRg/eG7YuTqYm1XPgXMg2PEAo=
 github.com/zmb3/spotify v0.0.0-20180212041948-79deba8533f6/go.mod h1:pHsWAmY9PfX7i/uwPZkmWrebc8JbK8FppKbvyevwzSU=
 golang.org/x/net v0.0.0-20180330215511-b68f30494add h1:oGr9qHpQTQvl/BmeWw95ZrQKahW4qdIPUiGfQkJYDsA=
